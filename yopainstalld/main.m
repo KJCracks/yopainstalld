@@ -149,7 +149,19 @@ static void yopainstalld_peer_event_handler(xpc_connection_t peer, xpc_object_t 
             NSString* appBundle = [NSString stringWithFormat:@"%s", xpc_dictionary_get_string(event, "AppBundle")];
             PackageManager* manager = [[PackageManager alloc] initWithBundleIdentifier:appBundle];
             NSArray* versions = [manager getPatchVersions];
-#warning todo convert NSArray to XPC array (dumb)
+            
+            xpc_object_t array = xpc_array_create(NULL, 0);
+            
+            for (NSString *version in versions) {
+                xpc_array_append_value(array, xpc_string_create(version.UTF8String));
+            }
+            
+            xpc_object_t message = xpc_dictionary_create(NULL, NULL, 0);
+            xpc_dictionary_set_string(message, "Status", "Complete");
+            xpc_dictionary_set_value(message, "PatchVersions", array);
+            xpc_connection_send_message(peer, message);
+            
+
         }
         else if ([_command isEqualToString:@"GetPatchFiles"]) {
             NSString* appBundle = [NSString stringWithFormat:@"%s", xpc_dictionary_get_string(event, "AppBundle")];
