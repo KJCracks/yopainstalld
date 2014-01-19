@@ -154,6 +154,10 @@ static void yopainstalld_peer_event_handler(xpc_connection_t peer, xpc_object_t 
         else if ([_command isEqualToString:@"GetPatchFiles"]) {
             NSString* appBundle = [NSString stringWithFormat:@"%s", xpc_dictionary_get_string(event, "AppBundle")];
             NSInteger appVersion = xpc_dictionary_get_int64(event, "Version");
+            PackageManager* manager = [[PackageManager alloc] initWithBundleIdentifier:appBundle];
+            NSInteger currentVersion = [manager->appInfo objectForKey:@"CFBundleVersion"];
+            
+            NSArray* addFiles = [manager getFilesToPatch:appVersion newVersion:currentVersion];
             
             
         }

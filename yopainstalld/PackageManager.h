@@ -27,6 +27,9 @@
 -(NSString*)getSignatureOfBundle:(NSString*)bundle;
 -(BOOL)isInstalled:(NSString*)bundle signature:(NSString*)signature;
 
+-(NSArray*)getFilesToRemove:(NSInteger)oldVersion newVersion:(NSInteger)newVersion;
+-(NSArray*)getFilesToPatch:(NSInteger)oldVersion newVersion:(NSInteger)newVersion;
+
 @end
 
 void listdir(const char *name, int level, NSMutableArray** array);

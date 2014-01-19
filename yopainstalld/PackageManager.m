@@ -126,8 +126,48 @@ void listdir(const char *name, int level, NSMutableArray** array)
     return [versionDict allKeys];
 }
 
--(NSArray*)getFilesToPatch {
+-(NSArray*)getFilesToPatch:(NSInteger)oldVersion newVersion:(NSInteger)newVersion {
+    NSMutableArray* files = [NSMutableArray new];
     
+    NSDictionary* oldVersionDict = [versionDict objectForKey:oldVersion];
+    NSDictionary* newVersionDict = [versionDict objectForKey:newVersion];
+    
+    //loop through all the files in the new version
+    for (NSString* filePath in [newVersionDict allKeys]) {
+        
+        //get the fileinfo of the file in the new version
+        FileInfo* newInfo = (FileInfo*)[newVersionDict objectForKey:filePath];
+        //get the fileinfo of the file in the old version
+        FileInfo* oldInfo = (FileInfo*)[oldVersionDict objectForKey:filePath];
+        
+        if (oldInfo == nil) { //new file in new version wow
+            DebugLog(@"New file %@ detected in version %ld, not present in version %ld", filePath, (long)newVersion, (long)oldVersion);
+            [files addObject:filePath];
+            continue;
+        }
+        if (![newInfo compareWith:oldInfo]) {
+            DebugLog(@"File %@ has been modifed in new version", filePath);
+            [files addObject:filePath];
+            continue;
+        }
+        
+    }
+    return files;
+}
+
+-(NSArray*)getFilesToRemove:(NSInteger)oldVersion newVersion:(NSInteger)newVersion {
+    NSMutableArray* files = [NSMutableArray new];
+    NSDictionary* oldVersionDict = [versionDict objectForKey:oldVersion];
+    NSDictionary* newVersionDict = [versionDict objectForKey:newVersion];
+    //loop through all the files in the old version
+    for (NSString* filePath in [oldVersionDict allKeys]) {
+        if ([newVersionDict objectForKey:filePath] == nil) {
+            DebugLog(@"File %@ has been deleted in new version", filePath);
+            [files addObject:filePath];
+            continue;
+        }
+    }
+    return files;
 }
 
 -(void) savePackageVersion {
