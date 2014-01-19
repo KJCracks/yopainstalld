@@ -4,8 +4,8 @@ if [[ $1 == upgrade ]]; then
 	/bin/launchctl unload /Library/LaunchDaemons/zorro.yopainstalld.plist
 fi
 
-chown root:wheel /usr/bin/__PACKAGENAME__
-chmod 755 /usr/bin/__PACKAGENAME__
+chown root:wheel /usr/bin/yopainstalld
+chmod 755 /usr/bin/yopainstalld
 chown root:wheel /Library/LaunchDaemons/zorro.yopainstalld.plist
 chmod 644 /Library/LaunchDaemons/zorro.yopainstalld.plist
 

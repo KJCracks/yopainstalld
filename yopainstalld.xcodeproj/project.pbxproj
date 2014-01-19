@@ -9,12 +9,50 @@
 /* Begin PBXBuildFile section */
 		F442861F188B5FD900C060B8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F442861E188B5FD900C060B8 /* Foundation.framework */; };
 		F4428629188B5FD900C060B8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F4428628188B5FD900C060B8 /* main.m */; };
+		F442865A188B609100C060B8 /* 7z.h in Headers */ = {isa = PBXBuildFile; fileRef = F4428635188B609100C060B8 /* 7z.h */; };
+		F442865B188B609100C060B8 /* 7zBuf.c in Sources */ = {isa = PBXBuildFile; fileRef = F4428636188B609100C060B8 /* 7zBuf.c */; };
+		F442865C188B609100C060B8 /* 7zBuf.h in Headers */ = {isa = PBXBuildFile; fileRef = F4428637188B609100C060B8 /* 7zBuf.h */; };
+		F442865D188B609100C060B8 /* 7zBuf2.c in Sources */ = {isa = PBXBuildFile; fileRef = F4428638188B609100C060B8 /* 7zBuf2.c */; };
+		F442865E188B609100C060B8 /* 7zDec.c in Sources */ = {isa = PBXBuildFile; fileRef = F4428639188B609100C060B8 /* 7zDec.c */; };
+		F442865F188B609100C060B8 /* 7zFile.c in Sources */ = {isa = PBXBuildFile; fileRef = F442863A188B609100C060B8 /* 7zFile.c */; };
+		F4428660188B609100C060B8 /* 7zFile.h in Headers */ = {isa = PBXBuildFile; fileRef = F442863B188B609100C060B8 /* 7zFile.h */; };
+		F4428661188B609100C060B8 /* 7zIn.c in Sources */ = {isa = PBXBuildFile; fileRef = F442863C188B609100C060B8 /* 7zIn.c */; };
+		F4428662188B609100C060B8 /* 7zStream.c in Sources */ = {isa = PBXBuildFile; fileRef = F442863D188B609100C060B8 /* 7zStream.c */; };
+		F4428663188B609100C060B8 /* 7zVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = F442863E188B609100C060B8 /* 7zVersion.h */; };
+		F4428664188B609100C060B8 /* Alloc.c in Sources */ = {isa = PBXBuildFile; fileRef = F442863F188B609100C060B8 /* Alloc.c */; };
+		F4428665188B609100C060B8 /* Alloc.h in Headers */ = {isa = PBXBuildFile; fileRef = F4428640188B609100C060B8 /* Alloc.h */; };
+		F4428666188B609100C060B8 /* CpuArch.c in Sources */ = {isa = PBXBuildFile; fileRef = F4428641188B609100C060B8 /* CpuArch.c */; };
+		F4428667188B609100C060B8 /* CpuArch.h in Headers */ = {isa = PBXBuildFile; fileRef = F4428642188B609100C060B8 /* CpuArch.h */; };
+		F4428668188B609100C060B8 /* Delta.c in Sources */ = {isa = PBXBuildFile; fileRef = F4428643188B609100C060B8 /* Delta.c */; };
+		F4428669188B609100C060B8 /* Delta.h in Headers */ = {isa = PBXBuildFile; fileRef = F4428644188B609100C060B8 /* Delta.h */; };
+		F442866A188B609100C060B8 /* LzHash.h in Headers */ = {isa = PBXBuildFile; fileRef = F4428645188B609100C060B8 /* LzHash.h */; };
+		F442866B188B609100C060B8 /* Lzma2Dec.c in Sources */ = {isa = PBXBuildFile; fileRef = F4428646188B609100C060B8 /* Lzma2Dec.c */; };
+		F442866C188B609100C060B8 /* Lzma2Dec.h in Headers */ = {isa = PBXBuildFile; fileRef = F4428647188B609100C060B8 /* Lzma2Dec.h */; };
+		F442866D188B609100C060B8 /* LzmaDec.c in Sources */ = {isa = PBXBuildFile; fileRef = F4428648188B609100C060B8 /* LzmaDec.c */; };
+		F442866E188B609100C060B8 /* LzmaDec.h in Headers */ = {isa = PBXBuildFile; fileRef = F4428649188B609100C060B8 /* LzmaDec.h */; };
+		F442866F188B609100C060B8 /* LZMAExtractor.h in Headers */ = {isa = PBXBuildFile; fileRef = F442864A188B609100C060B8 /* LZMAExtractor.h */; };
+		F4428670188B609100C060B8 /* LZMAExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = F442864B188B609100C060B8 /* LZMAExtractor.m */; };
+		F4428671188B609100C060B8 /* Ppmd.h in Headers */ = {isa = PBXBuildFile; fileRef = F442864C188B609100C060B8 /* Ppmd.h */; };
+		F4428672188B609100C060B8 /* Ppmd7.c in Sources */ = {isa = PBXBuildFile; fileRef = F442864D188B609100C060B8 /* Ppmd7.c */; };
+		F4428673188B609100C060B8 /* Ppmd7.h in Headers */ = {isa = PBXBuildFile; fileRef = F442864E188B609100C060B8 /* Ppmd7.h */; };
+		F4428674188B609100C060B8 /* Ppmd7Dec.c in Sources */ = {isa = PBXBuildFile; fileRef = F442864F188B609100C060B8 /* Ppmd7Dec.c */; };
+		F4428675188B609100C060B8 /* Ppmd8.c in Sources */ = {isa = PBXBuildFile; fileRef = F4428650188B609100C060B8 /* Ppmd8.c */; };
+		F4428676188B609100C060B8 /* Ppmd8.h in Headers */ = {isa = PBXBuildFile; fileRef = F4428651188B609100C060B8 /* Ppmd8.h */; };
+		F4428677188B609100C060B8 /* Ppmd8Dec.c in Sources */ = {isa = PBXBuildFile; fileRef = F4428652188B609100C060B8 /* Ppmd8Dec.c */; };
+		F4428678188B609100C060B8 /* RotateDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = F4428653188B609100C060B8 /* RotateDefs.h */; };
+		F4428679188B609100C060B8 /* Types.h in Headers */ = {isa = PBXBuildFile; fileRef = F4428654188B609100C060B8 /* Types.h */; };
+		F442867A188B609100C060B8 /* 7zAlloc.c in Sources */ = {isa = PBXBuildFile; fileRef = F4428657188B609100C060B8 /* 7zAlloc.c */; };
+		F442867B188B609100C060B8 /* 7zAlloc.h in Headers */ = {isa = PBXBuildFile; fileRef = F4428658188B609100C060B8 /* 7zAlloc.h */; };
+		F442867C188B609100C060B8 /* 7zMain.c in Sources */ = {isa = PBXBuildFile; fileRef = F4428659188B609100C060B8 /* 7zMain.c */; };
+		F442867F188B60AD00C060B8 /* YOPAPackage.h in Headers */ = {isa = PBXBuildFile; fileRef = F442867D188B60AD00C060B8 /* YOPAPackage.h */; };
+		F4428680188B60AD00C060B8 /* YOPAPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = F442867E188B60AD00C060B8 /* YOPAPackage.m */; };
+		F4428682188B60E100C060B8 /* MobileInstallation.h in Headers */ = {isa = PBXBuildFile; fileRef = F4428681188B60E100C060B8 /* MobileInstallation.h */; };
+		F4428684188B610F00C060B8 /* MobileInstallation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4428683188B610F00C060B8 /* MobileInstallation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		F442861B188B5FD900C060B8 /* yopainstalld */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = yopainstalld; sourceTree = BUILT_PRODUCTS_DIR; };
 		F442861E188B5FD900C060B8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		F4428623188B5FD900C060B8 /* control.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = control.txt; path = Package/DEBIAN/control.txt; sourceTree = "<group>"; };
 		F4428624188B5FD900C060B8 /* control */ = {isa = PBXFileReference; lastKnownFileType = text; name = control; path = Package/DEBIAN/control; sourceTree = "<group>"; };
 		F4428626188B5FD900C060B8 /* PackageVersion.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PackageVersion.plist; sourceTree = "<group>"; };
 		F4428627188B5FD900C060B8 /* yopainstalld-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "yopainstalld-Prefix.pch"; sourceTree = "<group>"; };
@@ -22,6 +60,46 @@
 		F442862C188B5FD900C060B8 /* zorro.yopainstalld.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = zorro.yopainstalld.plist; path = Package/Library/LaunchDaemons/zorro.yopainstalld.plist; sourceTree = "<group>"; };
 		F442862D188B5FD900C060B8 /* postinst */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = postinst; path = Package/DEBIAN/postinst; sourceTree = "<group>"; };
 		F442862E188B5FD900C060B8 /* prerm */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = prerm; path = Package/DEBIAN/prerm; sourceTree = "<group>"; };
+		F4428635188B609100C060B8 /* 7z.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 7z.h; sourceTree = "<group>"; };
+		F4428636188B609100C060B8 /* 7zBuf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 7zBuf.c; sourceTree = "<group>"; };
+		F4428637188B609100C060B8 /* 7zBuf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 7zBuf.h; sourceTree = "<group>"; };
+		F4428638188B609100C060B8 /* 7zBuf2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 7zBuf2.c; sourceTree = "<group>"; };
+		F4428639188B609100C060B8 /* 7zDec.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 7zDec.c; sourceTree = "<group>"; };
+		F442863A188B609100C060B8 /* 7zFile.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 7zFile.c; sourceTree = "<group>"; };
+		F442863B188B609100C060B8 /* 7zFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 7zFile.h; sourceTree = "<group>"; };
+		F442863C188B609100C060B8 /* 7zIn.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 7zIn.c; sourceTree = "<group>"; };
+		F442863D188B609100C060B8 /* 7zStream.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 7zStream.c; sourceTree = "<group>"; };
+		F442863E188B609100C060B8 /* 7zVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 7zVersion.h; sourceTree = "<group>"; };
+		F442863F188B609100C060B8 /* Alloc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Alloc.c; sourceTree = "<group>"; };
+		F4428640188B609100C060B8 /* Alloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Alloc.h; sourceTree = "<group>"; };
+		F4428641188B609100C060B8 /* CpuArch.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = CpuArch.c; sourceTree = "<group>"; };
+		F4428642188B609100C060B8 /* CpuArch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CpuArch.h; sourceTree = "<group>"; };
+		F4428643188B609100C060B8 /* Delta.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Delta.c; sourceTree = "<group>"; };
+		F4428644188B609100C060B8 /* Delta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Delta.h; sourceTree = "<group>"; };
+		F4428645188B609100C060B8 /* LzHash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LzHash.h; sourceTree = "<group>"; };
+		F4428646188B609100C060B8 /* Lzma2Dec.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Lzma2Dec.c; sourceTree = "<group>"; };
+		F4428647188B609100C060B8 /* Lzma2Dec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lzma2Dec.h; sourceTree = "<group>"; };
+		F4428648188B609100C060B8 /* LzmaDec.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = LzmaDec.c; sourceTree = "<group>"; };
+		F4428649188B609100C060B8 /* LzmaDec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LzmaDec.h; sourceTree = "<group>"; };
+		F442864A188B609100C060B8 /* LZMAExtractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZMAExtractor.h; sourceTree = "<group>"; };
+		F442864B188B609100C060B8 /* LZMAExtractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZMAExtractor.m; sourceTree = "<group>"; };
+		F442864C188B609100C060B8 /* Ppmd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ppmd.h; sourceTree = "<group>"; };
+		F442864D188B609100C060B8 /* Ppmd7.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Ppmd7.c; sourceTree = "<group>"; };
+		F442864E188B609100C060B8 /* Ppmd7.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ppmd7.h; sourceTree = "<group>"; };
+		F442864F188B609100C060B8 /* Ppmd7Dec.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Ppmd7Dec.c; sourceTree = "<group>"; };
+		F4428650188B609100C060B8 /* Ppmd8.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Ppmd8.c; sourceTree = "<group>"; };
+		F4428651188B609100C060B8 /* Ppmd8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ppmd8.h; sourceTree = "<group>"; };
+		F4428652188B609100C060B8 /* Ppmd8Dec.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Ppmd8Dec.c; sourceTree = "<group>"; };
+		F4428653188B609100C060B8 /* RotateDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RotateDefs.h; sourceTree = "<group>"; };
+		F4428654188B609100C060B8 /* Types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Types.h; sourceTree = "<group>"; };
+		F4428657188B609100C060B8 /* 7zAlloc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 7zAlloc.c; sourceTree = "<group>"; };
+		F4428658188B609100C060B8 /* 7zAlloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 7zAlloc.h; sourceTree = "<group>"; };
+		F4428659188B609100C060B8 /* 7zMain.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 7zMain.c; sourceTree = "<group>"; };
+		F442867D188B60AD00C060B8 /* YOPAPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YOPAPackage.h; path = LZMASDK/YOPAPackage.h; sourceTree = "<group>"; };
+		F442867E188B60AD00C060B8 /* YOPAPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YOPAPackage.m; path = LZMASDK/YOPAPackage.m; sourceTree = "<group>"; };
+		F4428681188B60E100C060B8 /* MobileInstallation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobileInstallation.h; sourceTree = "<group>"; };
+		F4428683188B610F00C060B8 /* MobileInstallation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MobileInstallation.framework; sourceTree = "<group>"; };
+		F4428686188B61EB00C060B8 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +107,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4428684188B610F00C060B8 /* MobileInstallation.framework in Frameworks */,
 				F442861F188B5FD900C060B8 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -56,6 +135,7 @@
 		F442861D188B5FD900C060B8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F4428683188B610F00C060B8 /* MobileInstallation.framework */,
 				F442861E188B5FD900C060B8 /* Foundation.framework */,
 			);
 			name = Frameworks;
@@ -64,9 +144,13 @@
 		F4428620188B5FD900C060B8 /* yopainstalld */ = {
 			isa = PBXGroup;
 			children = (
+				F4428634188B609100C060B8 /* LZMASDK */,
+				F442867D188B60AD00C060B8 /* YOPAPackage.h */,
+				F442867E188B60AD00C060B8 /* YOPAPackage.m */,
 				F4428628188B5FD900C060B8 /* main.m */,
 				F4428621188B5FD900C060B8 /* Package */,
 				F4428625188B5FD900C060B8 /* Supporting Files */,
+				F4428686188B61EB00C060B8 /* Entitlements.plist */,
 			);
 			path = yopainstalld;
 			sourceTree = "<group>";
@@ -83,7 +167,6 @@
 		F4428622188B5FD900C060B8 /* DEBIAN */ = {
 			isa = PBXGroup;
 			children = (
-				F4428623188B5FD900C060B8 /* control.txt */,
 				F4428624188B5FD900C060B8 /* control */,
 				F442862D188B5FD900C060B8 /* postinst */,
 				F442862E188B5FD900C060B8 /* prerm */,
@@ -95,6 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				F4428626188B5FD900C060B8 /* PackageVersion.plist */,
+				F4428681188B60E100C060B8 /* MobileInstallation.h */,
 				F4428627188B5FD900C060B8 /* yopainstalld-Prefix.pch */,
 			);
 			name = "Supporting Files";
@@ -116,6 +200,64 @@
 			name = LaunchDaemons;
 			sourceTree = "<group>";
 		};
+		F4428634188B609100C060B8 /* LZMASDK */ = {
+			isa = PBXGroup;
+			children = (
+				F4428635188B609100C060B8 /* 7z.h */,
+				F4428636188B609100C060B8 /* 7zBuf.c */,
+				F4428637188B609100C060B8 /* 7zBuf.h */,
+				F4428638188B609100C060B8 /* 7zBuf2.c */,
+				F4428639188B609100C060B8 /* 7zDec.c */,
+				F442863A188B609100C060B8 /* 7zFile.c */,
+				F442863B188B609100C060B8 /* 7zFile.h */,
+				F442863C188B609100C060B8 /* 7zIn.c */,
+				F442863D188B609100C060B8 /* 7zStream.c */,
+				F442863E188B609100C060B8 /* 7zVersion.h */,
+				F442863F188B609100C060B8 /* Alloc.c */,
+				F4428640188B609100C060B8 /* Alloc.h */,
+				F4428641188B609100C060B8 /* CpuArch.c */,
+				F4428642188B609100C060B8 /* CpuArch.h */,
+				F4428643188B609100C060B8 /* Delta.c */,
+				F4428644188B609100C060B8 /* Delta.h */,
+				F4428645188B609100C060B8 /* LzHash.h */,
+				F4428646188B609100C060B8 /* Lzma2Dec.c */,
+				F4428647188B609100C060B8 /* Lzma2Dec.h */,
+				F4428648188B609100C060B8 /* LzmaDec.c */,
+				F4428649188B609100C060B8 /* LzmaDec.h */,
+				F442864A188B609100C060B8 /* LZMAExtractor.h */,
+				F442864B188B609100C060B8 /* LZMAExtractor.m */,
+				F442864C188B609100C060B8 /* Ppmd.h */,
+				F442864D188B609100C060B8 /* Ppmd7.c */,
+				F442864E188B609100C060B8 /* Ppmd7.h */,
+				F442864F188B609100C060B8 /* Ppmd7Dec.c */,
+				F4428650188B609100C060B8 /* Ppmd8.c */,
+				F4428651188B609100C060B8 /* Ppmd8.h */,
+				F4428652188B609100C060B8 /* Ppmd8Dec.c */,
+				F4428653188B609100C060B8 /* RotateDefs.h */,
+				F4428654188B609100C060B8 /* Types.h */,
+				F4428655188B609100C060B8 /* Util */,
+			);
+			path = LZMASDK;
+			sourceTree = "<group>";
+		};
+		F4428655188B609100C060B8 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				F4428656188B609100C060B8 /* 7z */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		F4428656188B609100C060B8 /* 7z */ = {
+			isa = PBXGroup;
+			children = (
+				F4428657188B609100C060B8 /* 7zAlloc.c */,
+				F4428658188B609100C060B8 /* 7zAlloc.h */,
+				F4428659188B609100C060B8 /* 7zMain.c */,
+			);
+			path = 7z;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -123,6 +265,25 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4428676188B609100C060B8 /* Ppmd8.h in Headers */,
+				F442866A188B609100C060B8 /* LzHash.h in Headers */,
+				F4428679188B609100C060B8 /* Types.h in Headers */,
+				F4428663188B609100C060B8 /* 7zVersion.h in Headers */,
+				F442867F188B60AD00C060B8 /* YOPAPackage.h in Headers */,
+				F4428682188B60E100C060B8 /* MobileInstallation.h in Headers */,
+				F4428667188B609100C060B8 /* CpuArch.h in Headers */,
+				F4428673188B609100C060B8 /* Ppmd7.h in Headers */,
+				F4428669188B609100C060B8 /* Delta.h in Headers */,
+				F4428665188B609100C060B8 /* Alloc.h in Headers */,
+				F442866E188B609100C060B8 /* LzmaDec.h in Headers */,
+				F4428678188B609100C060B8 /* RotateDefs.h in Headers */,
+				F442866C188B609100C060B8 /* Lzma2Dec.h in Headers */,
+				F442866F188B609100C060B8 /* LZMAExtractor.h in Headers */,
+				F442865A188B609100C060B8 /* 7z.h in Headers */,
+				F4428671188B609100C060B8 /* Ppmd.h in Headers */,
+				F442867B188B609100C060B8 /* 7zAlloc.h in Headers */,
+				F442865C188B609100C060B8 /* 7zBuf.h in Headers */,
+				F4428660188B609100C060B8 /* 7zFile.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,6 +298,7 @@
 				F4428617188B5FD900C060B8 /* Frameworks */,
 				F4428618188B5FD900C060B8 /* Headers */,
 				F4428619188B5FD900C060B8 /* ShellScript */,
+				F4428685188B613100C060B8 /* Codesign */,
 			);
 			buildRules = (
 			);
@@ -186,6 +348,21 @@
 			shellPath = /bin/sh;
 			shellScript = "/opt/iOSOpenDev/bin/iosod --xcbp";
 		};
+		F4428685188B613100C060B8 /* Codesign */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Codesign;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "ldid -S${SRCROOT}/yopainstalld/Entitlements.plist ${TARGET_BUILD_DIR}/yopainstalld";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -193,7 +370,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F442867A188B609100C060B8 /* 7zAlloc.c in Sources */,
+				F4428680188B60AD00C060B8 /* YOPAPackage.m in Sources */,
+				F4428662188B609100C060B8 /* 7zStream.c in Sources */,
+				F4428675188B609100C060B8 /* Ppmd8.c in Sources */,
+				F442865B188B609100C060B8 /* 7zBuf.c in Sources */,
+				F442866D188B609100C060B8 /* LzmaDec.c in Sources */,
+				F442865E188B609100C060B8 /* 7zDec.c in Sources */,
+				F4428664188B609100C060B8 /* Alloc.c in Sources */,
+				F4428677188B609100C060B8 /* Ppmd8Dec.c in Sources */,
+				F442865F188B609100C060B8 /* 7zFile.c in Sources */,
+				F442865D188B609100C060B8 /* 7zBuf2.c in Sources */,
+				F4428670188B609100C060B8 /* LZMAExtractor.m in Sources */,
+				F4428672188B609100C060B8 /* Ppmd7.c in Sources */,
+				F4428668188B609100C060B8 /* Delta.c in Sources */,
 				F4428629188B5FD900C060B8 /* main.m in Sources */,
+				F4428666188B609100C060B8 /* CpuArch.c in Sources */,
+				F442866B188B609100C060B8 /* Lzma2Dec.c in Sources */,
+				F4428674188B609100C060B8 /* Ppmd7Dec.c in Sources */,
+				F4428661188B609100C060B8 /* 7zIn.c in Sources */,
+				F442867C188B609100C060B8 /* 7zMain.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -223,7 +419,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "$(iOSOpenDevPath)/include/**";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = "$(iOSOpenDevPath)/lib/**";
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -249,7 +445,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "$(iOSOpenDevPath)/include/**";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = "$(iOSOpenDevPath)/lib/**";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -262,6 +458,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "yopainstalld/yopainstalld-Prefix.pch";
 				INSTALL_PATH = /usr/bin;
@@ -280,6 +480,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "yopainstalld/yopainstalld-Prefix.pch";
 				INSTALL_PATH = /usr/bin;
