@@ -139,11 +139,17 @@ static void yopainstalld_peer_event_handler(xpc_connection_t peer, xpc_object_t 
             NSString* appBundle = [NSString stringWithFormat:@"%s", xpc_dictionary_get_string(event, "AppBundle")];
             PackageManager* manager = [[PackageManager alloc] initWithBundleIdentifier:appBundle];
             if (manager == nil) {
-                //todo send error
+                xpc_object_t message = xpc_dictionary_create(NULL, NULL, 0);
+                xpc_dictionary_set_string(message, "Error", "Could not find bundle");
+                xpc_dictionary_set_string(message, "Status", "Error");
+                xpc_connection_send_message(peer, message);
                 return;
             }
             [manager savePackageVersion];
-            yopainstalld_status(peer, @"Complete");
+            
+            xpc_object_t message = xpc_dictionary_create(NULL, NULL, 0);
+            xpc_dictionary_set_string(message, "Status", "Complete");
+            xpc_connection_send_message(peer, message);
         }
         else if ([_command isEqualToString:@"GetPatchVersions"]) {
             NSString* appBundle = [NSString stringWithFormat:@"%s", xpc_dictionary_get_string(event, "AppBundle")];

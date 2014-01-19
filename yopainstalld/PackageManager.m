@@ -8,9 +8,10 @@
 
 void listdir(const char *name, int level, NSMutableArray** array)
 {
+    DebugLog(@"wow so wow %s, %u", name, level);
     DIR *dir;
     struct dirent *entry;
-    //printf("ieterating %s", name);
+    //DebugLog(@"ieterating %s", name);
     if (!(dir = opendir(name)))
         return;
     if (!(entry = readdir(dir)))
@@ -23,12 +24,12 @@ void listdir(const char *name, int level, NSMutableArray** array)
             path[len] = 0;
             if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
                 continue;
-            //printf("%*s[%s]\n", level*2, "", entry->d_name);
+            //DebugLog(@"%*s[%s]\n", level*2, "", entry->d_name);
             listdir(path, level + 1, array);
         }
         else {
-            printf("%*s- %s%s\n", level*2, "", name, entry->d_name);
-            [*array addObject:[NSString stringWithFormat:@"%s%s", name, entry->d_name]];
+            DebugLog(@"%s/%s", name, entry->d_name);
+            [*array addObject:[NSString stringWithFormat:@"%s/%s", name, entry->d_name]];
         }
         
     } while ((entry = readdir(dir)));
@@ -84,7 +85,7 @@ void listdir(const char *name, int level, NSMutableArray** array)
     static dispatch_once_t pred;
     static NSDictionary* apps = nil;
     dispatch_once(&pred, ^{
-        NSDictionary* options = @{@"ApplicationType":@"User",@"ReturnAttributes":@[@"CFBundleShortVersionString",@"CFBundleVersion",@"Path",@"CFBundleDisplayName",@"CFBundleIdentifier",@"ApplicationSINF",@"MinimumOSVersion"]};
+        NSDictionary* options = @{@"ApplicationType":@"User",@"ReturnAttributes":@[@"CFBundleShortVersionString",@"CFBundleVersion",@"Path",@"CFBundleDisplayName",@"CFBundleIdentifier",@"MinimumOSVersion"]};
         apps = MobileInstallationLookup(options);
     });
     return apps;
@@ -93,33 +94,57 @@ void listdir(const char *name, int level, NSMutableArray** array)
 -(id)initWithBundleIdentifier:(NSString*)bundle {
     if (self = [super init]) {
         appBundleIdentifier = bundle;
-        appInfo = [[PackageManager appLookup] objectForKey:bundle];
+        for (NSString* _bundle in [[PackageManager appLookup] allKeys]) {
+            DebugLog(@"bundle names: %@", _bundle);
+            if ([_bundle caseInsensitiveCompare:bundle] == NSOrderedSame) {
+                DebugLog(@"wow found bundle: %@", _bundle);
+                appInfo = [[PackageManager appLookup] objectForKey:_bundle];
+                break;
+            }
+        }
+    
         if (appInfo == nil) {
             DebugLog(@"Couldn't find appInfo for bundle %@!!", bundle);
             return nil;
         }
-         appPlist = [@"/etc/yopa/" stringByAppendingPathComponent:[appInfo objectForKey:@"CFBundleIdentifier"]];
-        versionDict = [[NSMutableDictionary alloc]initWithContentsOfFile:appPlist];
+        DebugLog(@"wow %@", appInfo);
+        appArchiveLocation = [@"/etc/yopa/" stringByAppendingPathComponent:[appInfo objectForKey:@"CFBundleIdentifier"]];
+        DebugLog(@"applist %@", appArchiveLocation);
+        versionDict = [NSKeyedUnarchiver unarchiveObjectWithFile:appArchiveLocation];
         if (versionDict == nil) {
-            versionDict = [NSMutableDictionary new];
+            DebugLog(@"versionDict is new wow");
+            versionDict = [[NSMutableDictionary alloc] init];
         }
     }
     return self;
 }
 
 -(NSDictionary*)getDirectoryInfo:(NSString*)dir {
-    NSMutableArray* array;
+    DebugLog(@"setting directory %@", dir);
+    NSMutableArray* array = [[NSMutableArray alloc] init];
     NSMutableDictionary* dict = [[NSMutableDictionary alloc] init];
     chdir([dir UTF8String]);
+    char* cwd;
+    char buff[PATH_MAX + 1];
+    
+    cwd = getcwd( buff, PATH_MAX + 1 );
+    if( cwd != NULL ) {
+        DebugLog(@"My working directory is %s", cwd );
+    }
     listdir(".", 0, &array);
     for (NSString* file in array) {
+        NSString* _file = [file substringFromIndex:2];
+        //[[file lastPathComponent] stringByDeletingPathExtension];
         struct stat buffer;
-        if (!lstat(file.UTF8String, &buffer)) {
-            DebugLog(@"Error could not stat file %@", file);
-            FileInfo* info = [[FileInfo alloc] initWithStat:buffer andFileName:file];
-            [dict setObject:info forKey:file];
+        int ret = lstat(_file.UTF8String, &buffer);
+        if (ret == -1){
+            DebugLog(@"Error could not stat file %@", _file);
+            break;
         }
+        FileInfo* info = [[FileInfo alloc] initWithStat:buffer andFileName:_file];
+        [dict setObject:info forKey:_file];
     }
+    DebugLog(@"da dictionary %@", dict);
     return dict;
 }
 -(NSArray*)getPatchVersions {
@@ -172,8 +197,11 @@ void listdir(const char *name, int level, NSMutableArray** array)
 
 -(void) savePackageVersion {
     NSDictionary *directoryInfo = [self getDirectoryInfo:[appInfo objectForKey:@"Path"]];
-    [versionDict setObject:directoryInfo forKey:[appInfo objectForKey:@"CFBundleVersion"]];
-    [versionDict writeToFile:appPlist atomically:YES];
+    DebugLog(@"hello 1234");
+    [versionDict setObject:directoryInfo forKey:appBundleIdentifier];
+    DebugLog(@"hello 4321");
+    DebugLog(@"oh hello there! %@", appArchiveLocation);
+    [NSKeyedArchiver archiveRootObject:versionDict toFile:appArchiveLocation];
     
 }
 @end

@@ -12,7 +12,7 @@
 #import <Foundation/Foundation.h>
 
 @interface PackageManager : NSObject {
-    NSString* appPlist;
+    NSString* appArchiveLocation;
     @public
     NSString* appBundleIdentifier;
     NSDictionary* appInfo;

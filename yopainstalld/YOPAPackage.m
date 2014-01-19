@@ -50,7 +50,7 @@ static NSString * genRandStringLength(int len) {
 }
 
 -(NSString*) processPackage {
-    switch(_header.compression_format) {
+    switch(_header.main_compression_format) {
         case SEVENZIP_COMPRESSION: {
             NSLog(@"7zip compression, extracting");
             _tmpDir = [NSString stringWithFormat:@"/tmp/yopa-%@", genRandStringLength(8)];
