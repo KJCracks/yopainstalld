@@ -17,9 +17,16 @@
 #import "MobileInstallation.h"
 
 typedef struct yopa_connection {
-    xpc_connection_t peer;
+    __unsafe_unretained xpc_connection_t peer;
     
 } yopa_connection;
+
+
+static void yopainstalld_status(xpc_connection_t peer, NSString* statusMessage) {
+    xpc_object_t message = xpc_dictionary_create(NULL, NULL, 0);
+    xpc_dictionary_set_string(message, "Status", statusMessage.UTF8String);
+    xpc_connection_send_message(peer, message);
+}
 
 static void yopainstalld_peer_event_handler(xpc_connection_t peer, xpc_object_t event)
 {
@@ -51,20 +58,10 @@ static void yopainstalld_peer_event_handler(xpc_connection_t peer, xpc_object_t 
         }
         
         NSString *_command = [NSString stringWithUTF8String:command];
-        
+
         // Install only for now
         
-        if (![_command isEqualToString:@"Install"])
-        {
-            xpc_object_t message = xpc_dictionary_create(NULL, NULL, 0);
-            xpc_dictionary_set_string(message, "Error", "Wrong Command");
-            xpc_dictionary_set_string(message, "Status", "Error");
-            xpc_connection_send_message(peer, message);
-            
-            return;
-        }
-        else
-        {
+        if ([_command isEqualToString:@"Install"]) {
             
             const char * packagePath = xpc_dictionary_get_string(event, "PackagePath");
             
@@ -80,11 +77,13 @@ static void yopainstalld_peer_event_handler(xpc_connection_t peer, xpc_object_t 
             
             NSString *_packagePath = [NSString stringWithUTF8String:packagePath];
             
-            {
+            yopainstalld_status(peer, [@"Processing file at path: " stringByAppendingString:_packagePath]);
+            
+            /*{
                 xpc_object_t message = xpc_dictionary_create(NULL, NULL, 0);
                 xpc_dictionary_set_string(message, "Status", [@"Processing file at path: " stringByAppendingString:_packagePath].UTF8String);
                 xpc_connection_send_message(peer, message);
-            }
+            }*/
 
             
             YOPAPackage *_yopaPackage = [[YOPAPackage alloc]initWithPackagePath:_packagePath];
@@ -99,11 +98,12 @@ static void yopainstalld_peer_event_handler(xpc_connection_t peer, xpc_object_t 
                 return;
             }
             
-            {
+            /*{
                 xpc_object_t message = xpc_dictionary_create(NULL, NULL, 0);
                 xpc_dictionary_set_string(message, "Status", "Found YOPA file!");
                 xpc_connection_send_message(peer, message);
-            }
+            }*/
+            yopainstalld_status(peer, @"Found YOPA file!");
             
             NSString *ipaPath = [_yopaPackage processPackage];
             
@@ -115,7 +115,7 @@ static void yopainstalld_peer_event_handler(xpc_connection_t peer, xpc_object_t 
                 return;
             }
             
-            int ret = MobileInstallationInstall((__bridge CFStringRef)ipaPath, (__bridge CFDictionaryRef)@{@"ApplicationType":@"User"}, 0, ipaPath);
+            int ret = MobileInstallationInstall((__bridge CFStringRef)ipaPath, (__bridge CFDictionaryRef)@{@"ApplicationType":@"User"}, 0, (__bridge void *)(ipaPath));
             
             [[NSFileManager defaultManager]removeItemAtPath:[_yopaPackage getTempDir] error:nil];
             
@@ -130,6 +130,26 @@ static void yopainstalld_peer_event_handler(xpc_connection_t peer, xpc_object_t 
             
             xpc_object_t message = xpc_dictionary_create(NULL, NULL, 0);
             xpc_dictionary_set_string(message, "Status", "Complete");
+            xpc_connection_send_message(peer, message);
+            
+            return;
+        }
+        else if ([_command isEqualToString:@"GetSignature"]) {
+            NSString* appBundle = [NSString stringWithFormat:@"%s", xpc_dictionary_get_string(event, "AppBundle")];
+            NSDictionary* options = @{@"ApplicationType":@"User",@"ReturnAttributes":@[@"CFBundleShortVersionString",@"CFBundleVersion",@"Path",@"CFBundleDisplayName",@"CFBundleExecutable",@"ApplicationSINF",@"MinimumOSVersion"]};
+            
+            NSDictionary* apps = MobileInstallationLookup(options);
+            NSDictionary* appInfo = [apps objectForKey:appBundle];
+            if (appInfo == nil) {
+                //todo send error
+                return;
+            }
+            
+        }
+        else {
+            xpc_object_t message = xpc_dictionary_create(NULL, NULL, 0);
+            xpc_dictionary_set_string(message, "Error", "Wrong Command");
+            xpc_dictionary_set_string(message, "Status", "Error");
             xpc_connection_send_message(peer, message);
             
             return;

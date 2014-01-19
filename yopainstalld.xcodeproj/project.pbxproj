@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		ADD601A6188B914800DD1156 /* YOPAPackage.h in Headers */ = {isa = PBXBuildFile; fileRef = ADD601A4188B914800DD1156 /* YOPAPackage.h */; };
+		ADD601A7188B914800DD1156 /* YOPAPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = ADD601A5188B914800DD1156 /* YOPAPackage.m */; };
+		ADD601AC188B928C00DD1156 /* PackageManager.h in Headers */ = {isa = PBXBuildFile; fileRef = ADD601AA188B928C00DD1156 /* PackageManager.h */; };
+		ADD601AD188B928C00DD1156 /* PackageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ADD601AB188B928C00DD1156 /* PackageManager.m */; };
 		F442861F188B5FD900C060B8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F442861E188B5FD900C060B8 /* Foundation.framework */; };
 		F4428629188B5FD900C060B8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F4428628188B5FD900C060B8 /* main.m */; };
 		F442865A188B609100C060B8 /* 7z.h in Headers */ = {isa = PBXBuildFile; fileRef = F4428635188B609100C060B8 /* 7z.h */; };
@@ -44,13 +48,16 @@
 		F442867A188B609100C060B8 /* 7zAlloc.c in Sources */ = {isa = PBXBuildFile; fileRef = F4428657188B609100C060B8 /* 7zAlloc.c */; };
 		F442867B188B609100C060B8 /* 7zAlloc.h in Headers */ = {isa = PBXBuildFile; fileRef = F4428658188B609100C060B8 /* 7zAlloc.h */; };
 		F442867C188B609100C060B8 /* 7zMain.c in Sources */ = {isa = PBXBuildFile; fileRef = F4428659188B609100C060B8 /* 7zMain.c */; };
-		F442867F188B60AD00C060B8 /* YOPAPackage.h in Headers */ = {isa = PBXBuildFile; fileRef = F442867D188B60AD00C060B8 /* YOPAPackage.h */; };
-		F4428680188B60AD00C060B8 /* YOPAPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = F442867E188B60AD00C060B8 /* YOPAPackage.m */; };
 		F4428682188B60E100C060B8 /* MobileInstallation.h in Headers */ = {isa = PBXBuildFile; fileRef = F4428681188B60E100C060B8 /* MobileInstallation.h */; };
 		F4428684188B610F00C060B8 /* MobileInstallation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4428683188B610F00C060B8 /* MobileInstallation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		ADD601A4188B914800DD1156 /* YOPAPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YOPAPackage.h; sourceTree = "<group>"; };
+		ADD601A5188B914800DD1156 /* YOPAPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YOPAPackage.m; sourceTree = "<group>"; };
+		ADD601A8188B91E400DD1156 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		ADD601AA188B928C00DD1156 /* PackageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageManager.h; sourceTree = "<group>"; };
+		ADD601AB188B928C00DD1156 /* PackageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageManager.m; sourceTree = "<group>"; };
 		F442861B188B5FD900C060B8 /* yopainstalld */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = yopainstalld; sourceTree = BUILT_PRODUCTS_DIR; };
 		F442861E188B5FD900C060B8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		F4428624188B5FD900C060B8 /* control */ = {isa = PBXFileReference; lastKnownFileType = text; name = control; path = Package/DEBIAN/control; sourceTree = "<group>"; };
@@ -95,8 +102,6 @@
 		F4428657188B609100C060B8 /* 7zAlloc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 7zAlloc.c; sourceTree = "<group>"; };
 		F4428658188B609100C060B8 /* 7zAlloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 7zAlloc.h; sourceTree = "<group>"; };
 		F4428659188B609100C060B8 /* 7zMain.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 7zMain.c; sourceTree = "<group>"; };
-		F442867D188B60AD00C060B8 /* YOPAPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YOPAPackage.h; path = LZMASDK/YOPAPackage.h; sourceTree = "<group>"; };
-		F442867E188B60AD00C060B8 /* YOPAPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YOPAPackage.m; path = LZMASDK/YOPAPackage.m; sourceTree = "<group>"; };
 		F4428681188B60E100C060B8 /* MobileInstallation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobileInstallation.h; sourceTree = "<group>"; };
 		F4428683188B610F00C060B8 /* MobileInstallation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MobileInstallation.framework; sourceTree = "<group>"; };
 		F4428686188B61EB00C060B8 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
@@ -135,6 +140,7 @@
 		F442861D188B5FD900C060B8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				ADD601A8188B91E400DD1156 /* CoreFoundation.framework */,
 				F4428683188B610F00C060B8 /* MobileInstallation.framework */,
 				F442861E188B5FD900C060B8 /* Foundation.framework */,
 			);
@@ -145,12 +151,14 @@
 			isa = PBXGroup;
 			children = (
 				F4428634188B609100C060B8 /* LZMASDK */,
-				F442867D188B60AD00C060B8 /* YOPAPackage.h */,
-				F442867E188B60AD00C060B8 /* YOPAPackage.m */,
+				ADD601A4188B914800DD1156 /* YOPAPackage.h */,
+				ADD601A5188B914800DD1156 /* YOPAPackage.m */,
 				F4428628188B5FD900C060B8 /* main.m */,
 				F4428621188B5FD900C060B8 /* Package */,
 				F4428625188B5FD900C060B8 /* Supporting Files */,
 				F4428686188B61EB00C060B8 /* Entitlements.plist */,
+				ADD601AA188B928C00DD1156 /* PackageManager.h */,
+				ADD601AB188B928C00DD1156 /* PackageManager.m */,
 			);
 			path = yopainstalld;
 			sourceTree = "<group>";
@@ -269,7 +277,6 @@
 				F442866A188B609100C060B8 /* LzHash.h in Headers */,
 				F4428679188B609100C060B8 /* Types.h in Headers */,
 				F4428663188B609100C060B8 /* 7zVersion.h in Headers */,
-				F442867F188B60AD00C060B8 /* YOPAPackage.h in Headers */,
 				F4428682188B60E100C060B8 /* MobileInstallation.h in Headers */,
 				F4428667188B609100C060B8 /* CpuArch.h in Headers */,
 				F4428673188B609100C060B8 /* Ppmd7.h in Headers */,
@@ -281,7 +288,9 @@
 				F442866F188B609100C060B8 /* LZMAExtractor.h in Headers */,
 				F442865A188B609100C060B8 /* 7z.h in Headers */,
 				F4428671188B609100C060B8 /* Ppmd.h in Headers */,
+				ADD601A6188B914800DD1156 /* YOPAPackage.h in Headers */,
 				F442867B188B609100C060B8 /* 7zAlloc.h in Headers */,
+				ADD601AC188B928C00DD1156 /* PackageManager.h in Headers */,
 				F442865C188B609100C060B8 /* 7zBuf.h in Headers */,
 				F4428660188B609100C060B8 /* 7zFile.h in Headers */,
 			);
@@ -371,12 +380,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				F442867A188B609100C060B8 /* 7zAlloc.c in Sources */,
-				F4428680188B60AD00C060B8 /* YOPAPackage.m in Sources */,
 				F4428662188B609100C060B8 /* 7zStream.c in Sources */,
 				F4428675188B609100C060B8 /* Ppmd8.c in Sources */,
 				F442865B188B609100C060B8 /* 7zBuf.c in Sources */,
 				F442866D188B609100C060B8 /* LzmaDec.c in Sources */,
 				F442865E188B609100C060B8 /* 7zDec.c in Sources */,
+				ADD601A7188B914800DD1156 /* YOPAPackage.m in Sources */,
 				F4428664188B609100C060B8 /* Alloc.c in Sources */,
 				F4428677188B609100C060B8 /* Ppmd8Dec.c in Sources */,
 				F442865F188B609100C060B8 /* 7zFile.c in Sources */,
@@ -387,6 +396,7 @@
 				F4428629188B5FD900C060B8 /* main.m in Sources */,
 				F4428666188B609100C060B8 /* CpuArch.c in Sources */,
 				F442866B188B609100C060B8 /* Lzma2Dec.c in Sources */,
+				ADD601AD188B928C00DD1156 /* PackageManager.m in Sources */,
 				F4428674188B609100C060B8 /* Ppmd7Dec.c in Sources */,
 				F4428661188B609100C060B8 /* 7zIn.c in Sources */,
 				F442867C188B609100C060B8 /* 7zMain.c in Sources */,
@@ -419,7 +429,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "$(iOSOpenDevPath)/include/**";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "$(iOSOpenDevPath)/lib/**";
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -445,7 +455,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "$(iOSOpenDevPath)/include/**";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "$(iOSOpenDevPath)/lib/**";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -517,6 +527,7 @@
 				F4428633188B5FD900C060B8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
