@@ -4,6 +4,7 @@
 //
 
 #import "PackageManager.h"
+#import "MobileInstallation.h"
 
 void listdir(const char *name, int level, NSMutableArray** array)
 {
@@ -36,6 +37,14 @@ void listdir(const char *name, int level, NSMutableArray** array)
 }
 
 @implementation FileInfo
+
+-(BOOL)compareWith:(FileInfo*)info {
+    if ((self->ctime != info->ctime) || (self->mtime != info->mtime) || (self->size != info->size)) {
+        return false;
+    }
+    return true;
+}
+
 -(id)initWithStat:(struct stat)buffer andFileName:(NSString*)name {
     if (self = [super init]) {
         self->fileName = name;
@@ -46,11 +55,57 @@ void listdir(const char *name, int level, NSMutableArray** array)
     }
     return self;
 }
+
+-(void) encodeWithCoder:(NSCoder *)encoder {
+    [encoder encodeObject:fileName forKey:@"FileName"];
+    [encoder encodeObject:ctime forKey:@"ctime"];
+    [encoder encodeObject:mtime forKey:@"mtime"];
+    [encoder encodeObject:size forKey:@"size"];
+    [encoder encodeObject:uid forKey:@"uid"];
+}
+
+-(id)initWithCoder:(NSCoder *)decoder {
+    if (self = [super init]) {
+        self->fileName = [decoder decodeObjectForKey:@"FileName"];
+        self->ctime = [decoder decodeObjectForKey:@"ctime"];
+        self->mtime = [decoder decodeObjectForKey:@"mtime"];
+        self->size = [decoder decodeObjectForKey:@"size"];
+        self->uid = [decoder decodeObjectForKey:@"uid"];
+    }
+    return self;
+}
 @end
 
 
 
 @implementation PackageManager
+
++ (NSDictionary*) appLookup {
+    static dispatch_once_t pred;
+    static NSDictionary* apps = nil;
+    dispatch_once(&pred, ^{
+        NSDictionary* options = @{@"ApplicationType":@"User",@"ReturnAttributes":@[@"CFBundleShortVersionString",@"CFBundleVersion",@"Path",@"CFBundleDisplayName",@"CFBundleIdentifier",@"ApplicationSINF",@"MinimumOSVersion"]};
+        apps = MobileInstallationLookup(options);
+    });
+    return apps;
+}
+
+-(id)initWithBundleIdentifier:(NSString*)bundle {
+    if (self = [super init]) {
+        appBundleIdentifier = bundle;
+        appInfo = [[PackageManager appLookup] objectForKey:bundle];
+        if (appInfo == nil) {
+            DebugLog(@"Couldn't find appInfo for bundle %@!!", bundle);
+            return nil;
+        }
+         appPlist = [@"/etc/yopa/" stringByAppendingPathComponent:[appInfo objectForKey:@"CFBundleIdentifier"]];
+        versionDict = [[NSMutableDictionary alloc]initWithContentsOfFile:appPlist];
+        if (versionDict == nil) {
+            versionDict = [NSMutableDictionary new];
+        }
+    }
+    return self;
+}
 
 -(NSDictionary*)getDirectoryInfo:(NSString*)dir {
     NSMutableArray* array;
@@ -67,5 +122,18 @@ void listdir(const char *name, int level, NSMutableArray** array)
     }
     return dict;
 }
+-(NSArray*)getPatchVersions {
+    return [versionDict allKeys];
+}
 
+-(NSArray*)getFilesToPatch {
+    
+}
+
+-(void) savePackageVersion {
+    NSDictionary *directoryInfo = [self getDirectoryInfo:[appInfo objectForKey:@"Path"]];
+    [versionDict setObject:directoryInfo forKey:[appInfo objectForKey:@"CFBundleVersion"]];
+    [versionDict writeToFile:appPlist atomically:YES];
+    
+}
 @end

@@ -13,7 +13,7 @@
 #include <Foundation/Foundation.h>
 
 #import "YOPAPackage.h"
-
+#import "PackageManager.h"
 #import "MobileInstallation.h"
 
 typedef struct yopa_connection {
@@ -123,6 +123,7 @@ static void yopainstalld_peer_event_handler(xpc_connection_t peer, xpc_object_t 
                 xpc_object_t message = xpc_dictionary_create(NULL, NULL, 0);
                 xpc_dictionary_set_string(message, "Error", [NSString stringWithFormat:@"Failed to install %@",ipaPath].UTF8String);
                 xpc_dictionary_set_string(message, "Status", "Error");
+                
                 xpc_connection_send_message(peer, message);
                 return;
             }
@@ -134,16 +135,26 @@ static void yopainstalld_peer_event_handler(xpc_connection_t peer, xpc_object_t 
             
             return;
         }
-        else if ([_command isEqualToString:@"GetSignature"]) {
+        else if ([_command isEqualToString:@"SaveVersion"]) {
             NSString* appBundle = [NSString stringWithFormat:@"%s", xpc_dictionary_get_string(event, "AppBundle")];
-            NSDictionary* options = @{@"ApplicationType":@"User",@"ReturnAttributes":@[@"CFBundleShortVersionString",@"CFBundleVersion",@"Path",@"CFBundleDisplayName",@"CFBundleExecutable",@"ApplicationSINF",@"MinimumOSVersion"]};
-            
-            NSDictionary* apps = MobileInstallationLookup(options);
-            NSDictionary* appInfo = [apps objectForKey:appBundle];
-            if (appInfo == nil) {
+            PackageManager* manager = [[PackageManager alloc] initWithBundleIdentifier:appBundle];
+            if (manager == nil) {
                 //todo send error
                 return;
             }
+            [manager savePackageVersion];
+            yopainstalld_status(peer, @"Complete");
+        }
+        else if ([_command isEqualToString:@"GetPatchVersions"]) {
+            NSString* appBundle = [NSString stringWithFormat:@"%s", xpc_dictionary_get_string(event, "AppBundle")];
+            PackageManager* manager = [[PackageManager alloc] initWithBundleIdentifier:appBundle];
+            NSArray* versions = [manager getPatchVersions];
+#warning todo convert NSArray to XPC array (dumb)
+        }
+        else if ([_command isEqualToString:@"GetPatchFiles"]) {
+            NSString* appBundle = [NSString stringWithFormat:@"%s", xpc_dictionary_get_string(event, "AppBundle")];
+            NSInteger appVersion = xpc_dictionary_get_int64(event, "Version");
+            
             
         }
         else {

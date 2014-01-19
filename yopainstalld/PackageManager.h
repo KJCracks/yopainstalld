@@ -11,9 +11,19 @@
 
 #import <Foundation/Foundation.h>
 
-@interface PackageManager : NSObject
+@interface PackageManager : NSObject {
+    NSString* appPlist;
+    @public
+    NSString* appBundleIdentifier;
+    NSDictionary* appInfo;
+    NSMutableDictionary* versionDict;
+}
 
--(void)updatePackage:(NSString*)bundle withSignature:(NSString*)signature;
++ (instancetype)sharedInstance;
+
+-(id)initWithBundleIdentifier:(NSString*)bundle;
+-(NSArray*)getPatchVersions;
+-(void)savePackageVersion;
 -(NSString*)getSignatureOfBundle:(NSString*)bundle;
 -(BOOL)isInstalled:(NSString*)bundle signature:(NSString*)signature;
 
@@ -22,7 +32,7 @@
 void listdir(const char *name, int level, NSMutableArray** array);
 
 
-@interface FileInfo: NSObject {
+@interface FileInfo: NSObject<NSCoding> {
     @public
     NSString* fileName;
     NSInteger ctime;
@@ -31,4 +41,5 @@ void listdir(const char *name, int level, NSMutableArray** array);
     NSInteger size;
 }
 -(id)initWithStat:(struct stat)buffer andFileName:(NSString*)name;
+-(BOOL)compareWith:(FileInfo*)info;
 @end
