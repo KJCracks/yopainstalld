@@ -478,10 +478,10 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				iOSOpenDevBuildPackageOnAnyBuild = NO;
 				iOSOpenDevCopyOnBuild = NO;
-				iOSOpenDevDevice = "";
+				iOSOpenDevDevice = 192.168.1.112;
 				iOSOpenDevInstallOnAnyBuild = NO;
 				iOSOpenDevInstallOnProfiling = YES;
-				iOSOpenDevRespringOnInstall = YES;
+				iOSOpenDevRespringOnInstall = NO;
 				iOSOpenDevUsePackageVersionPList = YES;
 			};
 			name = Debug;
@@ -500,10 +500,10 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				iOSOpenDevBuildPackageOnAnyBuild = NO;
 				iOSOpenDevCopyOnBuild = NO;
-				iOSOpenDevDevice = "";
+				iOSOpenDevDevice = 192.168.1.112;
 				iOSOpenDevInstallOnAnyBuild = NO;
 				iOSOpenDevInstallOnProfiling = YES;
-				iOSOpenDevRespringOnInstall = YES;
+				iOSOpenDevRespringOnInstall = NO;
 				iOSOpenDevUsePackageVersionPList = YES;
 			};
 			name = Release;

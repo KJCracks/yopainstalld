@@ -59,19 +59,19 @@ void listdir(const char *name, int level, NSMutableArray** array)
 
 -(void) encodeWithCoder:(NSCoder *)encoder {
     [encoder encodeObject:fileName forKey:@"FileName"];
-    [encoder encodeObject:ctime forKey:@"ctime"];
-    [encoder encodeObject:mtime forKey:@"mtime"];
-    [encoder encodeObject:size forKey:@"size"];
-    [encoder encodeObject:uid forKey:@"uid"];
+    [encoder encodeInteger:ctime forKey:@"ctime"];
+    [encoder encodeInteger:mtime forKey:@"mtime"];
+    [encoder encodeInteger:size forKey:@"size"];
+    [encoder encodeInteger:uid forKey:@"uid"];
 }
 
 -(id)initWithCoder:(NSCoder *)decoder {
     if (self = [super init]) {
         self->fileName = [decoder decodeObjectForKey:@"FileName"];
-        self->ctime = [decoder decodeObjectForKey:@"ctime"];
-        self->mtime = [decoder decodeObjectForKey:@"mtime"];
-        self->size = [decoder decodeObjectForKey:@"size"];
-        self->uid = [decoder decodeObjectForKey:@"uid"];
+        self->ctime = [decoder decodeIntegerForKey:@"ctime"];
+        self->mtime = [decoder decodeIntegerForKey:@"mtime"];
+        self->size = [decoder decodeIntegerForKey:@"size"];
+        self->uid = [decoder decodeIntegerForKey:@"uid"];
     }
     return self;
 }
@@ -108,6 +108,9 @@ void listdir(const char *name, int level, NSMutableArray** array)
             return nil;
         }
         DebugLog(@"wow %@", appInfo);
+        
+        [[NSFileManager defaultManager]createDirectoryAtPath:@"/etc/yopa/" withIntermediateDirectories:YES attributes:nil error:nil];
+        
         appArchiveLocation = [@"/etc/yopa/" stringByAppendingPathComponent:[appInfo objectForKey:@"CFBundleIdentifier"]];
         DebugLog(@"applist %@", appArchiveLocation);
         versionDict = [NSKeyedUnarchiver unarchiveObjectWithFile:appArchiveLocation];
