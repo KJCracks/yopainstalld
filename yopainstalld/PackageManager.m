@@ -3,8 +3,10 @@
 //  yopainstalld
 //
 
+#import "CRC32.h"
 #import "PackageManager.h"
 #import "MobileInstallation.h"
+#import "YOPAPackage.h"
 
 void listdir(const char *name, int level, NSMutableArray** array)
 {
@@ -28,7 +30,7 @@ void listdir(const char *name, int level, NSMutableArray** array)
             listdir(path, level + 1, array);
         }
         else {
-            DebugLog(@"%s/%s", name, entry->d_name);
+            //DebugLog(@"%s/%s", name, entry->d_name);
             [*array addObject:[NSString stringWithFormat:@"%s/%s", name, entry->d_name]];
         }
         
@@ -40,38 +42,31 @@ void listdir(const char *name, int level, NSMutableArray** array)
 @implementation FileInfo
 
 -(BOOL)compareWith:(FileInfo*)info {
-    if ((self->ctime != info->ctime) || (self->mtime != info->mtime) || (self->size != info->size)) {
-        return false;
+    if (![checksum isEqualToString:info->checksum]) {
+        DebugLog(@"checksum mis")
     }
     return true;
 }
 
--(id)initWithStat:(struct stat)buffer andFileName:(NSString*)name {
+-(id)initWithFileName:(NSString*)name andChecksum:(NSString*)checksum{
     if (self = [super init]) {
         self->fileName = name;
-        self->ctime = buffer.st_ctimespec.tv_nsec;
-        self->mtime = buffer.st_mtimespec.tv_nsec;
-        self->size = buffer.st_size;
-        self->uid = buffer.st_uid;
+        self->checksum = checksum;
     }
+    
+    //DebugLog(@"file %@ ctime %ld, mtime %ld, size %ld", fileName, (long)ctime, (long)mtime, (long)size);
     return self;
 }
 
 -(void) encodeWithCoder:(NSCoder *)encoder {
     [encoder encodeObject:fileName forKey:@"FileName"];
-    [encoder encodeInteger:ctime forKey:@"ctime"];
-    [encoder encodeInteger:mtime forKey:@"mtime"];
-    [encoder encodeInteger:size forKey:@"size"];
-    [encoder encodeInteger:uid forKey:@"uid"];
+    [encoder encodeObject:checksum forKey:@"Checksum"];
 }
 
 -(id)initWithCoder:(NSCoder *)decoder {
     if (self = [super init]) {
         self->fileName = [decoder decodeObjectForKey:@"FileName"];
-        self->ctime = [decoder decodeIntegerForKey:@"ctime"];
-        self->mtime = [decoder decodeIntegerForKey:@"mtime"];
-        self->size = [decoder decodeIntegerForKey:@"size"];
-        self->uid = [decoder decodeIntegerForKey:@"uid"];
+        self->checksum = [decoder decodeObjectForKey:@"Checksum"];
     }
     return self;
 }
@@ -89,6 +84,10 @@ void listdir(const char *name, int level, NSMutableArray** array)
         apps = MobileInstallationLookup(options);
     });
     return apps;
+}
+
+-(NSInteger)appVersion {
+    return [[[appInfo objectForKey:@"CFBundleVersion"] stringByReplacingOccurrencesOfString:@"." withString:@""] integerValue];
 }
 
 -(id)initWithBundleIdentifier:(NSString*)bundle {
@@ -137,17 +136,12 @@ void listdir(const char *name, int level, NSMutableArray** array)
     listdir(".", 0, &array);
     for (NSString* file in array) {
         NSString* _file = [file substringFromIndex:2];
-        //[[file lastPathComponent] stringByDeletingPathExtension];
-        struct stat buffer;
-        int ret = lstat(_file.UTF8String, &buffer);
-        if (ret == -1){
-            DebugLog(@"Error could not stat file %@", _file);
-            break;
-        }
-        FileInfo* info = [[FileInfo alloc] initWithStat:buffer andFileName:_file];
+        NSURL* path = [NSURL URLWithString:[dir stringByAppendingPathComponent:_file]];
+        DebugLog(@"checksum of file %@", path.path);
+        NSString* checksum = checksumOfFile(path);
+        FileInfo* info = [[FileInfo alloc] initWithFileName:_file andChecksum:checksum];
         [dict setObject:info forKey:_file];
     }
-    DebugLog(@"da dictionary %@", dict);
     return dict;
 }
 -(NSArray*)getPatchVersions {
@@ -155,10 +149,11 @@ void listdir(const char *name, int level, NSMutableArray** array)
 }
 
 -(NSArray*)getFilesToPatch:(NSInteger)oldVersion newVersion:(NSInteger)newVersion {
+    DebugLog(@"get files to patch %ld %ld", (long)oldVersion, (long)newVersion);
     NSMutableArray* files = [NSMutableArray new];
     
-    NSDictionary* oldVersionDict = [versionDict objectForKey:oldVersion];
-    NSDictionary* newVersionDict = [versionDict objectForKey:newVersion];
+    NSDictionary* oldVersionDict = [versionDict objectForKey:[NSNumber numberWithInteger:oldVersion]];
+    NSDictionary* newVersionDict = [versionDict objectForKey:[NSNumber numberWithInteger:newVersion]];
     
     //loop through all the files in the new version
     for (NSString* filePath in [newVersionDict allKeys]) {
@@ -185,8 +180,8 @@ void listdir(const char *name, int level, NSMutableArray** array)
 
 -(NSArray*)getFilesToRemove:(NSInteger)oldVersion newVersion:(NSInteger)newVersion {
     NSMutableArray* files = [NSMutableArray new];
-    NSDictionary* oldVersionDict = [versionDict objectForKey:oldVersion];
-    NSDictionary* newVersionDict = [versionDict objectForKey:newVersion];
+    NSDictionary* oldVersionDict = [versionDict objectForKey:[NSNumber numberWithInteger:oldVersion]];
+    NSDictionary* newVersionDict = [versionDict objectForKey:[NSNumber numberWithInteger:newVersion]];
     //loop through all the files in the old version
     for (NSString* filePath in [oldVersionDict allKeys]) {
         if ([newVersionDict objectForKey:filePath] == nil) {
@@ -200,11 +195,11 @@ void listdir(const char *name, int level, NSMutableArray** array)
 
 -(void) savePackageVersion {
     NSDictionary *directoryInfo = [self getDirectoryInfo:[appInfo objectForKey:@"Path"]];
-    DebugLog(@"hello 1234");
-    [versionDict setObject:directoryInfo forKey:appBundleIdentifier];
-    DebugLog(@"hello 4321");
-    DebugLog(@"oh hello there! %@", appArchiveLocation);
+    //DebugLog(@"dictionary info ok %@", directoryInfo);
+    [versionDict setObject:directoryInfo forKey:[NSNumber numberWithInteger:[self appVersion]]];
+    DebugLog(@"versionDict %@", versionDict);
     [NSKeyedArchiver archiveRootObject:versionDict toFile:appArchiveLocation];
     
 }
+
 @end

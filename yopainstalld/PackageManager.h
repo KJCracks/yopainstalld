@@ -22,6 +22,7 @@
 + (instancetype)sharedInstance;
 
 -(id)initWithBundleIdentifier:(NSString*)bundle;
+-(NSInteger)appVersion;
 -(NSArray*)getPatchVersions;
 -(void)savePackageVersion;
 -(NSString*)getSignatureOfBundle:(NSString*)bundle;
@@ -38,10 +39,7 @@ void listdir(const char *name, int level, NSMutableArray** array);
 @interface FileInfo: NSObject<NSCoding> {
     @public
     NSString* fileName;
-    NSInteger ctime;
-    NSInteger mtime;
-    NSInteger uid;
-    NSInteger size;
+    NSString* checksum;
 }
 -(id)initWithStat:(struct stat)buffer andFileName:(NSString*)name;
 -(BOOL)compareWith:(FileInfo*)info;

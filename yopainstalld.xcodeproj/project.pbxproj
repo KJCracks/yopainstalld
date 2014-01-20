@@ -11,6 +11,10 @@
 		ADD601A7188B914800DD1156 /* YOPAPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = ADD601A5188B914800DD1156 /* YOPAPackage.m */; };
 		ADD601AC188B928C00DD1156 /* PackageManager.h in Headers */ = {isa = PBXBuildFile; fileRef = ADD601AA188B928C00DD1156 /* PackageManager.h */; };
 		ADD601AD188B928C00DD1156 /* PackageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ADD601AB188B928C00DD1156 /* PackageManager.m */; };
+		ADD601C6188D4B7400DD1156 /* CRC32.h in Headers */ = {isa = PBXBuildFile; fileRef = ADD601C4188D4B7400DD1156 /* CRC32.h */; };
+		ADD601C7188D4B7400DD1156 /* CRC32.m in Sources */ = {isa = PBXBuildFile; fileRef = ADD601C5188D4B7400DD1156 /* CRC32.m */; };
+		ADD601CA188D657100DD1156 /* YOPASegment.h in Headers */ = {isa = PBXBuildFile; fileRef = ADD601C8188D657100DD1156 /* YOPASegment.h */; };
+		ADD601CB188D657100DD1156 /* YOPASegment.m in Sources */ = {isa = PBXBuildFile; fileRef = ADD601C9188D657100DD1156 /* YOPASegment.m */; };
 		F442861F188B5FD900C060B8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F442861E188B5FD900C060B8 /* Foundation.framework */; };
 		F4428629188B5FD900C060B8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F4428628188B5FD900C060B8 /* main.m */; };
 		F442865A188B609100C060B8 /* 7z.h in Headers */ = {isa = PBXBuildFile; fileRef = F4428635188B609100C060B8 /* 7z.h */; };
@@ -58,6 +62,10 @@
 		ADD601A8188B91E400DD1156 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		ADD601AA188B928C00DD1156 /* PackageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageManager.h; sourceTree = "<group>"; };
 		ADD601AB188B928C00DD1156 /* PackageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageManager.m; sourceTree = "<group>"; };
+		ADD601C4188D4B7400DD1156 /* CRC32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRC32.h; sourceTree = "<group>"; };
+		ADD601C5188D4B7400DD1156 /* CRC32.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRC32.m; sourceTree = "<group>"; };
+		ADD601C8188D657100DD1156 /* YOPASegment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YOPASegment.h; sourceTree = "<group>"; };
+		ADD601C9188D657100DD1156 /* YOPASegment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YOPASegment.m; sourceTree = "<group>"; };
 		F442861B188B5FD900C060B8 /* yopainstalld */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = yopainstalld; sourceTree = BUILT_PRODUCTS_DIR; };
 		F442861E188B5FD900C060B8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		F4428624188B5FD900C060B8 /* control */ = {isa = PBXFileReference; lastKnownFileType = text; name = control; path = Package/DEBIAN/control; sourceTree = "<group>"; };
@@ -153,12 +161,16 @@
 				F4428634188B609100C060B8 /* LZMASDK */,
 				ADD601A4188B914800DD1156 /* YOPAPackage.h */,
 				ADD601A5188B914800DD1156 /* YOPAPackage.m */,
+				ADD601C8188D657100DD1156 /* YOPASegment.h */,
+				ADD601C9188D657100DD1156 /* YOPASegment.m */,
 				F4428628188B5FD900C060B8 /* main.m */,
 				F4428621188B5FD900C060B8 /* Package */,
 				F4428625188B5FD900C060B8 /* Supporting Files */,
 				F4428686188B61EB00C060B8 /* Entitlements.plist */,
 				ADD601AA188B928C00DD1156 /* PackageManager.h */,
 				ADD601AB188B928C00DD1156 /* PackageManager.m */,
+				ADD601C4188D4B7400DD1156 /* CRC32.h */,
+				ADD601C5188D4B7400DD1156 /* CRC32.m */,
 			);
 			path = yopainstalld;
 			sourceTree = "<group>";
@@ -286,11 +298,13 @@
 				F4428678188B609100C060B8 /* RotateDefs.h in Headers */,
 				F442866C188B609100C060B8 /* Lzma2Dec.h in Headers */,
 				F442866F188B609100C060B8 /* LZMAExtractor.h in Headers */,
+				ADD601CA188D657100DD1156 /* YOPASegment.h in Headers */,
 				F442865A188B609100C060B8 /* 7z.h in Headers */,
 				F4428671188B609100C060B8 /* Ppmd.h in Headers */,
 				ADD601A6188B914800DD1156 /* YOPAPackage.h in Headers */,
 				F442867B188B609100C060B8 /* 7zAlloc.h in Headers */,
 				ADD601AC188B928C00DD1156 /* PackageManager.h in Headers */,
+				ADD601C6188D4B7400DD1156 /* CRC32.h in Headers */,
 				F442865C188B609100C060B8 /* 7zBuf.h in Headers */,
 				F4428660188B609100C060B8 /* 7zFile.h in Headers */,
 			);
@@ -355,7 +369,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/opt/iOSOpenDev/bin/iosod --xcbp";
+			shellScript = "export iOSOpenDevDevice=192.168.1.208\n/opt/iOSOpenDev/bin/iosod --xcbp";
 		};
 		F4428685188B613100C060B8 /* Codesign */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -382,10 +396,12 @@
 				F442867A188B609100C060B8 /* 7zAlloc.c in Sources */,
 				F4428662188B609100C060B8 /* 7zStream.c in Sources */,
 				F4428675188B609100C060B8 /* Ppmd8.c in Sources */,
+				ADD601CB188D657100DD1156 /* YOPASegment.m in Sources */,
 				F442865B188B609100C060B8 /* 7zBuf.c in Sources */,
 				F442866D188B609100C060B8 /* LzmaDec.c in Sources */,
 				F442865E188B609100C060B8 /* 7zDec.c in Sources */,
 				ADD601A7188B914800DD1156 /* YOPAPackage.m in Sources */,
+				ADD601C7188D4B7400DD1156 /* CRC32.m in Sources */,
 				F4428664188B609100C060B8 /* Alloc.c in Sources */,
 				F4428677188B609100C060B8 /* Ppmd8Dec.c in Sources */,
 				F442865F188B609100C060B8 /* 7zFile.c in Sources */,

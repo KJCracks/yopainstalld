@@ -15,12 +15,37 @@
 #import "YOPAPackage.h"
 #import "PackageManager.h"
 #import "MobileInstallation.h"
+#import "YOPAPackage.h"
 
 typedef struct yopa_connection {
     __unsafe_unretained xpc_connection_t peer;
     
 } yopa_connection;
+PackageType getPackageType(NSString* file);
 
+PackageType getPackageType(NSString* file) {
+    FILE* _package = fopen([file UTF8String], "r");
+    if (_package == NULL) {
+        return UNKNOWN;
+    }
+    
+    uint32_t magic;
+    fseek(_package, -4, SEEK_END);
+    fread(&magic, 4, 1, _package);
+    
+    if (magic == YOPA_HEADER_MAGIC) {
+        fseek(_package, -4 - sizeof(struct yopa_header), SEEK_END);
+        NSLog(@"YOPA fat Magic detected!");
+        return YOPA_FAT_PACKAGE;
+    }
+    else if (magic == YOPA_SEGMENT_MAGIC) {
+        NSLog(@"segment magic detected!");
+        return YOPA_SEGMENT_MAGIC;
+    }
+    NSLog(@"Couldn't find YOPA Magic.. huh");
+    fclose(_package);
+    return UNKNOWN;
+}
 
 static void yopainstalld_status(xpc_connection_t peer, NSString* statusMessage) {
     xpc_object_t message = xpc_dictionary_create(NULL, NULL, 0);
@@ -151,32 +176,51 @@ static void yopainstalld_peer_event_handler(xpc_connection_t peer, xpc_object_t 
             xpc_dictionary_set_string(message, "Status", "Complete");
             xpc_connection_send_message(peer, message);
         }
-        else if ([_command isEqualToString:@"GetPatchVersions"]) {
+        else if ([_command isEqualToString:@"GetVersions"]) {
             NSString* appBundle = [NSString stringWithFormat:@"%s", xpc_dictionary_get_string(event, "AppBundle")];
             PackageManager* manager = [[PackageManager alloc] initWithBundleIdentifier:appBundle];
             NSArray* versions = [manager getPatchVersions];
             
             xpc_object_t array = xpc_array_create(NULL, 0);
             
-            for (NSString *version in versions) {
-                xpc_array_append_value(array, xpc_string_create(version.UTF8String));
+            for (NSNumber* version in versions) {
+                xpc_array_append_value(array, xpc_int64_create([version integerValue]));
             }
             
             xpc_object_t message = xpc_dictionary_create(NULL, NULL, 0);
             xpc_dictionary_set_string(message, "Status", "Complete");
-            xpc_dictionary_set_value(message, "PatchVersions", array);
+            xpc_dictionary_set_value(message, "Versions", array);
             xpc_connection_send_message(peer, message);
             
 
         }
         else if ([_command isEqualToString:@"GetPatchFiles"]) {
             NSString* appBundle = [NSString stringWithFormat:@"%s", xpc_dictionary_get_string(event, "AppBundle")];
+            DebugLog(@"getting patch files ya");
             NSInteger appVersion = xpc_dictionary_get_int64(event, "Version");
+            
             PackageManager* manager = [[PackageManager alloc] initWithBundleIdentifier:appBundle];
-            NSInteger currentVersion = [manager->appInfo objectForKey:@"CFBundleVersion"];
+            NSInteger currentVersion = [manager appVersion];
+            DebugLog(@"app version %ld %ld", (long)currentVersion, (long)appVersion);
             
             NSArray* addFiles = [manager getFilesToPatch:appVersion newVersion:currentVersion];
+            NSArray* remFiles = [manager getFilesToRemove:appVersion newVersion:currentVersion];
             
+            xpc_object_t addArray = xpc_array_create(NULL, 0);
+            xpc_object_t remArray = xpc_array_create(NULL, 0);
+            for (NSString* file in addFiles) {
+                DebugLog(@"files to add %@", file);
+                xpc_array_append_value(addArray, xpc_string_create(file.UTF8String));
+            }
+            for (NSString* file in remFiles) {
+                xpc_array_append_value(remArray, xpc_string_create(file.UTF8String));
+            }
+            
+            xpc_object_t message = xpc_dictionary_create(NULL, NULL, 0);
+            xpc_dictionary_set_string(message, "Status", "Complete");
+            xpc_dictionary_set_value(message, "AddFiles", addArray);
+            xpc_dictionary_set_value(message, "RemoveFiles", remArray);
+            xpc_connection_send_message(peer, message);
             
         }
         else {
