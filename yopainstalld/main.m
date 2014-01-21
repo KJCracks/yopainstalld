@@ -21,31 +21,6 @@ typedef struct yopa_connection {
     __unsafe_unretained xpc_connection_t peer;
     
 } yopa_connection;
-PackageType getPackageType(NSString* file);
-
-PackageType getPackageType(NSString* file) {
-    FILE* _package = fopen([file UTF8String], "r");
-    if (_package == NULL) {
-        return UNKNOWN;
-    }
-    
-    uint32_t magic;
-    fseek(_package, -4, SEEK_END);
-    fread(&magic, 4, 1, _package);
-    
-    if (magic == YOPA_HEADER_MAGIC) {
-        fseek(_package, -4 - sizeof(struct yopa_header), SEEK_END);
-        NSLog(@"YOPA fat Magic detected!");
-        return YOPA_FAT_PACKAGE;
-    }
-    else if (magic == YOPA_SEGMENT_MAGIC) {
-        NSLog(@"segment magic detected!");
-        return YOPA_SEGMENT_MAGIC;
-    }
-    NSLog(@"Couldn't find YOPA Magic.. huh");
-    fclose(_package);
-    return UNKNOWN;
-}
 
 static void yopainstalld_status(xpc_connection_t peer, NSString* statusMessage) {
     xpc_object_t message = xpc_dictionary_create(NULL, NULL, 0);
@@ -113,7 +88,7 @@ static void yopainstalld_peer_event_handler(xpc_connection_t peer, xpc_object_t 
             
             YOPAPackage *_yopaPackage = [[YOPAPackage alloc]initWithPackagePath:_packagePath];
             
-            if (!_yopaPackage.isYOPA)
+            if (_yopaPackage.packageType == UNKNOWN)
             {
                 xpc_object_t message = xpc_dictionary_create(NULL, NULL, 0);
                 xpc_dictionary_set_string(message, "Error", [@"PackagePath is not YOPA file" UTF8String]);
