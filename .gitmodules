@@ -1,0 +1,3 @@
+[submodule "yopa-package"]
+	path = yopa-package
+	url = git@github.com:KJCracks/yopa-package.git

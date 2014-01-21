@@ -48,10 +48,10 @@ void listdir(const char *name, int level, NSMutableArray** array)
     return true;
 }
 
--(id)initWithFileName:(NSString*)name andChecksum:(NSString*)checksum{
+-(id)initWithFileName:(NSString*)name andChecksum:(NSString*)_checksum{
     if (self = [super init]) {
         self->fileName = name;
-        self->checksum = checksum;
+        self->checksum = _checksum;
     }
     
     //DebugLog(@"file %@ ctime %ld, mtime %ld, size %ld", fileName, (long)ctime, (long)mtime, (long)size);
