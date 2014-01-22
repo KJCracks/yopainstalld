@@ -3,10 +3,21 @@
 //  yopainstalld
 //
 
-#import "CRC32.h"
 #import "PackageManager.h"
 #import "MobileInstallation.h"
 #import "YOPAPackage.h"
+
+uint32_t crc32OfFile(NSString* file) {
+    int fd = open(file.UTF8String, O_RDONLY);
+    DebugLog(@"file fd %u", fd);
+    uint32_t hash;
+    off_t clen;
+    DebugLog(@"calculating hash");
+    crc32(fd, &hash, &clen);
+    close(fd);
+    DebugLog(@"wow da hash %u", CFSwapInt32(hash));
+    return hash;
+}
 
 void listdir(const char *name, int level, NSMutableArray** array)
 {
@@ -42,13 +53,13 @@ void listdir(const char *name, int level, NSMutableArray** array)
 @implementation FileInfo
 
 -(BOOL)compareWith:(FileInfo*)info {
-    if (![checksum isEqualToString:info->checksum]) {
-        DebugLog(@"checksum mis")
+    if (!([checksum isEqualToNumber:info->checksum])) {
+        DebugLog(@"checksum mismatch for file %@", info->fileName);
     }
     return true;
 }
 
--(id)initWithFileName:(NSString*)name andChecksum:(NSString*)_checksum{
+-(id)initWithFileName:(NSString*)name andChecksum:(NSNumber*)_checksum{
     if (self = [super init]) {
         self->fileName = name;
         self->checksum = _checksum;
@@ -136,10 +147,12 @@ void listdir(const char *name, int level, NSMutableArray** array)
     listdir(".", 0, &array);
     for (NSString* file in array) {
         NSString* _file = [file substringFromIndex:2];
-        NSURL* path = [NSURL URLWithString:[dir stringByAppendingPathComponent:_file]];
-        DebugLog(@"checksum of file %@", path.path);
-        NSString* checksum = checksumOfFile(path);
+        NSString* path = [dir stringByAppendingPathComponent:_file];
+        DebugLog(@"checksum of file %@", path);
+        // crc32OfFile(path);
+        NSNumber* checksum = [NSNumber numberWithUnsignedInteger:crc32OfFile(path)];
         FileInfo* info = [[FileInfo alloc] initWithFileName:_file andChecksum:checksum];
+        DebugLog(@"fileinfo ok!");
         [dict setObject:info forKey:_file];
     }
     return dict;
@@ -199,7 +212,7 @@ void listdir(const char *name, int level, NSMutableArray** array)
     [versionDict setObject:directoryInfo forKey:[NSNumber numberWithInteger:[self appVersion]]];
     DebugLog(@"versionDict %@", versionDict);
     [NSKeyedArchiver archiveRootObject:versionDict toFile:appArchiveLocation];
-    
+    DebugLog(@"save archive root object ok");
 }
 
 @end

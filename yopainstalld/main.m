@@ -88,7 +88,7 @@ static void yopainstalld_peer_event_handler(xpc_connection_t peer, xpc_object_t 
             
             YOPAPackage *_yopaPackage = [[YOPAPackage alloc]initWithPackagePath:_packagePath];
             
-            if (_yopaPackage.packageType == UNKNOWN)
+            /*if (_yopaPackage.packageType == UNKNOWN)
             {
                 xpc_object_t message = xpc_dictionary_create(NULL, NULL, 0);
                 xpc_dictionary_set_string(message, "Error", [@"PackagePath is not YOPA file" UTF8String]);
@@ -96,7 +96,7 @@ static void yopainstalld_peer_event_handler(xpc_connection_t peer, xpc_object_t 
                 xpc_connection_send_message(peer, message);
                 
                 return;
-            }
+            }*/
             
             /*{
                 xpc_object_t message = xpc_dictionary_create(NULL, NULL, 0);

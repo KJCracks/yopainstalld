@@ -10,6 +10,7 @@
 #include <sys/stat.h>
 
 #import <Foundation/Foundation.h>
+#import "crc32.h"
 
 @interface PackageManager : NSObject {
     NSString* appArchiveLocation;
@@ -34,12 +35,12 @@
 @end
 
 void listdir(const char *name, int level, NSMutableArray** array);
-
+uint32_t crc32OfFile(NSString* file);
 
 @interface FileInfo: NSObject<NSCoding> {
     @public
     NSString* fileName;
-    NSString* checksum;
+    NSNumber* checksum;
 }
 -(id)initWithStat:(struct stat)buffer andFileName:(NSString*)name;
 -(BOOL)compareWith:(FileInfo*)info;
