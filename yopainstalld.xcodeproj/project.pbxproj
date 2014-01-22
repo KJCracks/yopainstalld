@@ -163,12 +163,12 @@
 				F4AA27C0188EC0DC00037CC4 /* yopapackage */,
 				F4428634188B609100C060B8 /* LZMASDK */,
 				F4428628188B5FD900C060B8 /* main.m */,
-				F4428625188B5FD900C060B8 /* Supporting Files */,
 				F4428686188B61EB00C060B8 /* Entitlements.plist */,
 				ADD601AA188B928C00DD1156 /* PackageManager.h */,
 				ADD601AB188B928C00DD1156 /* PackageManager.m */,
 				ADD601F6188FCAC000DD1156 /* YOPAInstaller.h */,
 				ADD601F7188FCAC000DD1156 /* YOPAInstaller.m */,
+				F4428625188B5FD900C060B8 /* Supporting Files */,
 			);
 			path = yopainstalld;
 			sourceTree = "<group>";

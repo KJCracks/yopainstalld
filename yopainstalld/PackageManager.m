@@ -69,18 +69,6 @@ void listdir(const char *name, int level, NSMutableArray** array)
     return self;
 }
 
--(void) encodeWithCoder:(NSCoder *)encoder {
-    [encoder encodeObject:fileName forKey:@"FileName"];
-    [encoder encodeObject:checksum forKey:@"Checksum"];
-}
-
--(id)initWithCoder:(NSCoder *)decoder {
-    if (self = [super init]) {
-        self->fileName = [decoder decodeObjectForKey:@"FileName"];
-        self->checksum = [decoder decodeObjectForKey:@"Checksum"];
-    }
-    return self;
-}
 @end
 
 
@@ -123,7 +111,7 @@ void listdir(const char *name, int level, NSMutableArray** array)
         
         appArchiveLocation = [@"/etc/yopa/" stringByAppendingPathComponent:[appInfo objectForKey:@"CFBundleIdentifier"]];
         DebugLog(@"applist %@", appArchiveLocation);
-        versionDict = [NSKeyedUnarchiver unarchiveObjectWithFile:appArchiveLocation];
+        versionDict = [NSMutableDictionary dictionaryWithContentsOfFile:appArchiveLocation];
         if (versionDict == nil) {
             DebugLog(@"versionDict is new wow");
             versionDict = [[NSMutableDictionary alloc] init];
@@ -149,11 +137,8 @@ void listdir(const char *name, int level, NSMutableArray** array)
         NSString* _file = [file substringFromIndex:2];
         NSString* path = [dir stringByAppendingPathComponent:_file];
         DebugLog(@"checksum of file %@", path);
-        // crc32OfFile(path);
-        NSNumber* checksum = [NSNumber numberWithUnsignedInteger:crc32OfFile(path)];
-        FileInfo* info = [[FileInfo alloc] initWithFileName:_file andChecksum:checksum];
-        DebugLog(@"fileinfo ok!");
-        [dict setObject:info forKey:_file];
+
+        [dict setObject:[NSString stringWithFormat:@"%u",crc32OfFile(path)] forKey:_file];
     }
     return dict;
 }
@@ -171,10 +156,14 @@ void listdir(const char *name, int level, NSMutableArray** array)
     //loop through all the files in the new version
     for (NSString* filePath in [newVersionDict allKeys]) {
         
+        NSNumber *oldChecksum = [NSNumber numberWithUnsignedInteger:[[oldVersionDict objectForKey:filePath]integerValue]];
+        
+        NSNumber *newChecksum = [NSNumber numberWithUnsignedInteger:[[newVersionDict objectForKey:filePath]integerValue]];
+
         //get the fileinfo of the file in the new version
-        FileInfo* newInfo = (FileInfo*)[newVersionDict objectForKey:filePath];
+        FileInfo* newInfo = [[FileInfo alloc]initWithFileName:filePath andChecksum:newChecksum];
         //get the fileinfo of the file in the old version
-        FileInfo* oldInfo = (FileInfo*)[oldVersionDict objectForKey:filePath];
+        FileInfo* oldInfo = [[FileInfo alloc]initWithFileName:filePath andChecksum:oldChecksum];
         
         if (oldInfo == nil) { //new file in new version wow
             DebugLog(@"New file %@ detected in version %ld, not present in version %ld", filePath, (long)newVersion, (long)oldVersion);
@@ -191,7 +180,8 @@ void listdir(const char *name, int level, NSMutableArray** array)
     return files;
 }
 
--(NSArray*)getFilesToRemove:(NSInteger)oldVersion newVersion:(NSInteger)newVersion {
+- (NSArray*)getFilesToRemove:(NSInteger)oldVersion newVersion:(NSInteger)newVersion
+{
     NSMutableArray* files = [NSMutableArray new];
     NSDictionary* oldVersionDict = [versionDict objectForKey:[NSNumber numberWithInteger:oldVersion]];
     NSDictionary* newVersionDict = [versionDict objectForKey:[NSNumber numberWithInteger:newVersion]];
@@ -206,12 +196,16 @@ void listdir(const char *name, int level, NSMutableArray** array)
     return files;
 }
 
--(void) savePackageVersion {
+- (void)savePackageVersion
+{
     NSDictionary *directoryInfo = [self getDirectoryInfo:[appInfo objectForKey:@"Path"]];
     //DebugLog(@"dictionary info ok %@", directoryInfo);
-    [versionDict setObject:directoryInfo forKey:[NSNumber numberWithInteger:[self appVersion]]];
+    [versionDict setObject:directoryInfo forKey:[NSString stringWithFormat:@"%ld",(long)[self appVersion]]];
+    
     DebugLog(@"versionDict %@", versionDict);
-    [NSKeyedArchiver archiveRootObject:versionDict toFile:appArchiveLocation];
+   
+    [versionDict writeToFile:appArchiveLocation atomically:YES];
+
     DebugLog(@"save archive root object ok");
 }
 
