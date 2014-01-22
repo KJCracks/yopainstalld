@@ -178,23 +178,24 @@ static void yopainstalld_peer_event_handler(xpc_connection_t peer, xpc_object_t 
             NSInteger currentVersion = [manager appVersion];
             DebugLog(@"app version %ld %ld", (long)currentVersion, (long)appVersion);
             
-            NSArray* addFiles = [manager getFilesToPatch:appVersion newVersion:currentVersion];
-            NSArray* remFiles = [manager getFilesToRemove:appVersion newVersion:currentVersion];
+            NSDictionary* _diff = [manager diffOldVersion:appVersion newVersion:currentVersion];
             
-            xpc_object_t addArray = xpc_array_create(NULL, 0);
-            xpc_object_t remArray = xpc_array_create(NULL, 0);
-            for (NSString* file in addFiles) {
-                DebugLog(@"files to add %@", file);
-                xpc_array_append_value(addArray, xpc_string_create(file.UTF8String));
-            }
-            for (NSString* file in remFiles) {
-                xpc_array_append_value(remArray, xpc_string_create(file.UTF8String));
-            }
+            xpc_object_t diff = xpc_dictionary_create(NULL, NULL, 0);
+            
+            [_diff enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSArray *object, BOOL *stop) {
+                
+                xpc_object_t array = xpc_array_create(NULL, 0);
+                
+                for (NSString * path in object) {
+                    xpc_array_append_value(array, xpc_string_create(path.UTF8String));
+                }
+                
+                xpc_dictionary_set_value(diff, key.UTF8String, array);
+            }];
             
             xpc_object_t message = xpc_dictionary_create(NULL, NULL, 0);
             xpc_dictionary_set_string(message, "Status", "Complete");
-            xpc_dictionary_set_value(message, "AddFiles", addArray);
-            xpc_dictionary_set_value(message, "RemoveFiles", remArray);
+            xpc_dictionary_set_value(message, "Diff", diff);
             xpc_connection_send_message(peer, message);
             
         }

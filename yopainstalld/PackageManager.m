@@ -146,15 +146,24 @@ void listdir(const char *name, int level, NSMutableArray** array)
     return [versionDict allKeys];
 }
 
--(NSArray*)getFilesToPatch:(NSInteger)oldVersion newVersion:(NSInteger)newVersion {
+-(NSDictionary *)diffOldVersion:(NSInteger)oldVersion newVersion:(NSInteger)newVersion {
     DebugLog(@"get files to patch %ld %ld", (long)oldVersion, (long)newVersion);
     NSMutableArray* files = [NSMutableArray new];
     
     NSDictionary* oldVersionDict = [versionDict objectForKey:[NSNumber numberWithInteger:oldVersion]];
     NSDictionary* newVersionDict = [versionDict objectForKey:[NSNumber numberWithInteger:newVersion]];
     
+    NSArray *oldFiles = oldVersionDict.allKeys;
+    
+    NSMutableSet *filesToRemove = [NSMutableSet setWithArray:oldFiles];
+    NSMutableSet *oldSet = [filesToRemove mutableCopy];
+    NSMutableSet *newSet = [NSMutableSet setWithArray:oldFiles];
+    
+    [filesToRemove minusSet:newSet]; // yo
+    [oldSet minusSet:filesToRemove]; // yo[2]
+    
     //loop through all the files in the new version
-    for (NSString* filePath in [newVersionDict allKeys]) {
+    for (NSString* filePath in oldSet) {
         
         NSNumber *oldChecksum = [NSNumber numberWithUnsignedInteger:[[oldVersionDict objectForKey:filePath]integerValue]];
         
@@ -168,32 +177,13 @@ void listdir(const char *name, int level, NSMutableArray** array)
         if (oldInfo == nil) { //new file in new version wow
             DebugLog(@"New file %@ detected in version %ld, not present in version %ld", filePath, (long)newVersion, (long)oldVersion);
             [files addObject:filePath];
-            continue;
-        }
-        if (![newInfo compareWith:oldInfo]) {
+        }else if (![newInfo compareWith:oldInfo]) {
             DebugLog(@"File %@ has been modifed in new version", filePath);
             [files addObject:filePath];
-            continue;
         }
         
     }
-    return files;
-}
-
-- (NSArray*)getFilesToRemove:(NSInteger)oldVersion newVersion:(NSInteger)newVersion
-{
-    NSMutableArray* files = [NSMutableArray new];
-    NSDictionary* oldVersionDict = [versionDict objectForKey:[NSNumber numberWithInteger:oldVersion]];
-    NSDictionary* newVersionDict = [versionDict objectForKey:[NSNumber numberWithInteger:newVersion]];
-    //loop through all the files in the old version
-    for (NSString* filePath in [oldVersionDict allKeys]) {
-        if ([newVersionDict objectForKey:filePath] == nil) {
-            DebugLog(@"File %@ has been deleted in new version", filePath);
-            [files addObject:filePath];
-            continue;
-        }
-    }
-    return files;
+    return @{@"Remove":filesToRemove.allObjects,@"Patch":files};
 }
 
 - (void)savePackageVersion

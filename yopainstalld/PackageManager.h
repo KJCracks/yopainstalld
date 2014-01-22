@@ -12,7 +12,8 @@
 #import <Foundation/Foundation.h>
 #import "crc32.h"
 
-@interface PackageManager : NSObject {
+@interface PackageManager : NSObject
+{
     NSString* appArchiveLocation;
     @public
     NSString* appBundleIdentifier;
@@ -29,15 +30,15 @@
 -(NSString*)getSignatureOfBundle:(NSString*)bundle;
 -(BOOL)isInstalled:(NSString*)bundle signature:(NSString*)signature;
 
--(NSArray*)getFilesToRemove:(NSInteger)oldVersion newVersion:(NSInteger)newVersion;
--(NSArray*)getFilesToPatch:(NSInteger)oldVersion newVersion:(NSInteger)newVersion;
+-(NSDictionary *)diffOldVersion:(NSInteger)oldVersion newVersion:(NSInteger)newVersion;
 
 @end
 
 void listdir(const char *name, int level, NSMutableArray** array);
 uint32_t crc32OfFile(NSString* file);
 
-@interface FileInfo: NSObject<NSCoding> {
+@interface FileInfo: NSObject
+{
     @public
     NSString* fileName;
     NSNumber* checksum;
