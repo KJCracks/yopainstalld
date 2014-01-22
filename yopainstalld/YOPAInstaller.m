@@ -15,7 +15,7 @@
     }
     return self;
 }
-- (PackageType) getPackageType {
+- (YOPAPackageType) getPackageType {
     fseek(_file, -sizeof(uint32_t), 0);
     uint32_t magic;
     fread(&magic, sizeof(uint32_t), 1, _file);
