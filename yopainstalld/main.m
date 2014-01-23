@@ -149,6 +149,7 @@ static void yopainstalld_peer_event_handler(xpc_connection_t peer, xpc_object_t 
             
             xpc_object_t message = xpc_dictionary_create(NULL, NULL, 0);
             xpc_dictionary_set_string(message, "Status", "Complete");
+            xpc_dictionary_set_string(message, "Command", "SaveVersion");
             xpc_connection_send_message(peer, message);
         }
         else if ([_command isEqualToString:@"GetVersions"]) {
@@ -165,6 +166,7 @@ static void yopainstalld_peer_event_handler(xpc_connection_t peer, xpc_object_t 
             xpc_object_t message = xpc_dictionary_create(NULL, NULL, 0);
             xpc_dictionary_set_string(message, "Status", "Complete");
             xpc_dictionary_set_value(message, "Versions", array);
+            xpc_dictionary_set_string(message, "Command", "GetVersions");
             xpc_connection_send_message(peer, message);
             
 
@@ -196,6 +198,7 @@ static void yopainstalld_peer_event_handler(xpc_connection_t peer, xpc_object_t 
             xpc_object_t message = xpc_dictionary_create(NULL, NULL, 0);
             xpc_dictionary_set_string(message, "Status", "Complete");
             xpc_dictionary_set_value(message, "Diff", diff);
+            xpc_dictionary_set_string(message, "Command", "GetPatchFiles");
             xpc_connection_send_message(peer, message);
             
         }
